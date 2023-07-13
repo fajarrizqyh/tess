@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/login.css" />
+    <title>SouthCoffeeShop | Add New Place</title>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Section start -->
+    <section class="hero-login">
+      <a href="place.html" id="backButton">
+        <i class="bx bx-arrow-back"></i> Back
+      </a>
+      <!----------------------------- Form box ----------------------------------->
+      <div class="form-box form-add-place">
+        <div class="login-container" id="login">
+          <div class="top">
+            <header>Add new places</header>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              id="add-name"
+              class="input-field"
+              placeholder="Coffee Shop Name"
+            />
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="input-box">
+            <input
+              id="add-img"
+              type="text"
+              class="input-field"
+              placeholder="Coffee Shop Photo Url"
+            />
+            <i class="bx bx-image-alt"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              id="add-desc"
+              class="input-field"
+              placeholder="Description"
+            />
+            <i class="bx bx-file"></i>
+          </div>
+          <div class="input-box">
+            <input
+              id="add-location"
+              type="text"
+              class="input-field"
+              placeholder="Location"
+            />
+            <i class="bx bx-map-pin"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              id="add-instagram"
+              class="input-field"
+              placeholder="Instagram"
+            />
+            <i class="bx bxl-instagram"></i>
+          </div>
+          <div class="input-box">
+            <input
+              id="add-phone"
+              type="text"
+              class="input-field"
+              placeholder="Phone No."
+            />
+            <i class="bx bx-phone"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              id="add-menu"
+              class="input-field"
+              placeholder="Menu Image Url"
+            />
+            <i class="bx bx-food-menu"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="submit"
+              class="submit"
+              value="Add"
+              onclick="return submitPlace();"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section end -->
+
+    <!-- Footer start -->
+    <footer>
+      <!-- <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div> -->
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#place">place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="credit">
+        <p>Copyright &copy; 2023 All Rights Reserved by SouthCoffeeShop</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <div id="toast-container"></div>
+
+    <!-- Slide login start-->
+    <script>
+      // CHECK AUTH
+      if (
+        localStorage.getItem("USER_TOKEN") == null ||
+        localStorage.getItem("USER_ROLE") == 0
+      ) {
+        window.location.replace("place.html");
+      }
+
+      function submitPlace() {
+        const namePlace = document.querySelector("#add-name").value;
+        const imgPlace = document.querySelector("#add-img").value;
+        const descPlace = document.querySelector("#add-desc").value;
+        const locationPlace = document.querySelector("#add-location").value;
+        const instagramPlace = document.querySelector("#add-instagram").value;
+        const phonePlace = document.querySelector("#add-phone").value;
+        const menuPlace = document.querySelector("#add-menu").value;
+
+        if (
+          namePlace == "" ||
+          imgPlace == "" ||
+          descPlace == "" ||
+          locationPlace == "" ||
+          phonePlace == "" ||
+          menuPlace == "" ||
+          instagramPlace == ""
+        ) {
+          showToast("Please fill in all the fields");
+        } else {
+          let data = {
+            name: namePlace,
+            image_url: imgPlace,
+            desc: descPlace,
+            location: locationPlace,
+            instagram: instagramPlace,
+            ig_url: `https://www.instagram.com/${instagramPlace}/`,
+            contact: phonePlace,
+            menu_img_url: menuPlace,
+          };
+
+          fetch("http://localhost:1323/place", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("USER_TOKEN")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then((json) => {
+              showToast("Place added");
+
+              // Success: handle the response data
+              console.log("DATA", json.data);
+
+              // localStorage.setItem("",)
+              setTimeout(() => {
+                window.location.replace("place.html");
+              }, 3000);
+            })
+            .catch((error) => {
+              // Error: handle the fetch error
+              console.error(error);
+            });
+        }
+      }
+    </script>
+    <!-- Slide login end -->
+
+    <!-- feather-icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+    <style>
+      #backButton {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        z-index: 9999;
+        /* font-size: 18px; */
+        color: white;
+        text-decoration: none;
+        display: flex;
+        font-size: 20px;
+        align-items: center;
+      }
+
+      #backButton i {
+        margin-right: 5px;
+      }
+
+      @media (max-width: 778px) {
+        #backButton {
+          top: 40px;
+          left: 40px;
+          font-size: 15px;
+        }
+
+        #backButton i {
+          margin-right: 5px;
+        }
+      }
+
+      @media (max-width: 458px) {
+        #backButton {
+          top: 20px;
+          left: 20px;
+          font-size: 12px;
+        }
+
+        #backButton i {
+          margin-right: 5px;
+        }
+      }
+    </style>
+  </body>
+</html>

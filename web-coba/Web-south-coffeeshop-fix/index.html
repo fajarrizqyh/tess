@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Rekomendasi Tempat Kopi</title>
+
+    <!-- fonts -->
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--feather-icons-->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- EMAIL JS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("ugo8qi7fIMFyK8B1g");
+      })();
+    </script>
+
+    <!--style css-->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- navbar start -->
+    <nav class="navbar">
+      <a href="#home" class="navbar-logo">South<span>CoffeeShop</span></a>
+
+      <div class="nav-nav">
+        <a href="#home">Home</a>
+        <a href="place.html">Place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="login.html" id="user"><i data-feather="user"></i></a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+    <!-- Hero Section start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mari Mencari Suasana Baru</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, ipsum?
+        </p>
+        <a href="place.html" class="cta">Cari Sekarang</a>
+      </main>
+    </section>
+    <!-- Hero Section end -->
+
+    <!-- About Section start -->
+    <section id="about" class="about">
+      <h2>About Us</h2>
+
+      <div class="row">
+        <div class="content">
+          <h3>Apa itu South CoffeeShop?</h3>
+          <p id="test">
+            South CoffeeShop merupakan kumpulan tempat kopi di daerah Jakarta
+            Selatan, dimana kalian akan menemukan tempat-tempat kopi atau tempat
+            hangout bersama teman atau pasangan kalian dengan mudah.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section end-->
+
+    <!-- Contact Section Start -->
+    <section id="contact" class="contact">
+      <h2>Contact Us</h2>
+      <!-- <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto, commodi.
+      </p> -->
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126907.03761317559!2d106.80207945000002!3d-6.2841065499999935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1ec2422b0b3%3A0x39a0d0fe47404d02!2sSouth%20Jakarta%2C%20South%20Jakarta%20City%2C%20Jakarta!5e0!3m2!1sen!2sid!4v1687319811130!5m2!1sen!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form action="#contact">
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input id="email-name" type="text" placeholder="Name" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input id="email-address" type="text" placeholder="Email" />
+          </div>
+          <div class="input-group">
+            <i data-feather="message-square"></i>
+            <input id="email-message" type="text" placeholder="Message" />
+          </div>
+          <button class="send-email">Send Email</button>
+        </form>
+      </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <!-- Footer Start -->
+    <footer>
+      <!-- <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div> -->
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#place">place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="credit">
+        <p>Copyright &copy; 2023 All Rights Reserved by SouthCoffeeShop</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Toast -->
+    <div id="toast-container"></div>
+
+    <!-- feather-icons -->
+    <script>
+      const nameField = document.querySelector("#email-name");
+      const emailField = document.querySelector("#email-address");
+      const messageField = document.querySelector("#email-message");
+
+      document
+        .querySelector("button.send-email")
+        .addEventListener("click", () => {
+          console.log("SEND");
+
+          if (
+            nameField.value == "" ||
+            emailField.value == "" ||
+            messageField.value == ""
+          ) {
+            showToast("Please fill in all the fields");
+          } else {
+            var templateParams = {
+              name: nameField.value,
+              email: emailField.value,
+              message: messageField.value,
+            };
+
+            emailjs
+              .send("service_ybnazwl", "template_rx186pc", templateParams)
+              .then(
+                function (response) {
+                  console.log("SUCCESS!", response.status, response.text);
+                  showToast(`Email Sent!`);
+                },
+                function (error) {
+                  console.log("FAILED...", error);
+                  showToast(`Failed ${error}`);
+                }
+              );
+          }
+        });
+
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

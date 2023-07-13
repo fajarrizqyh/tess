@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- style css -->
+    <link rel="stylesheet" href="css/place.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--feather-icons-->
+    <script src="https://unpkg.com/feather-icons"></script>
+  </head>
+  <body>
+    <!-- navbar start -->
+    <nav class="navbar-fajar">
+      <a href="index.html" class="navbar-logo">South<span>CoffeeShop</span></a>
+
+      <div class="nav-nav">
+        <a href="index.html">Home</a>
+        <a href="#">Place</a>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Contact</a>
+      </div>
+
+      <div class="navbar-extra d-flex align-items-center">
+        <input
+          id="search-bar"
+          style="border-radius: 20px; padding-left: 10px; width: 20vw"
+          type="text"
+          placeholder="Search..."
+        />
+        <a href="#" id="search"
+          ><i class="feather-20" data-feather="search"></i
+        ></a>
+        <a href="login.html" id="user"
+          ><i class="feather-20" data-feather="user"></i
+        ></a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+    </nav>
+    <!-- navbar end -->
+
+    <!-- card -->
+    <div style="height: 7vh"></div>
+    <section class="my-5" style="z-index: 0">
+      <div class="container">
+        <button
+          id="action_add"
+          onclick="return window.location.replace(`add_place.html`);"
+        >
+          Add New Place
+        </button>
+
+        <div id="cardContainer" class="row mb-2"></div>
+      </div>
+    </section>
+
+    <!-- Footer Start -->
+    <footer>
+      <!-- <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div> -->
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#place">place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="credit">
+        <p>Copyright &copy; 2023 All Rights Reserved by SouthCoffeeShop</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content" style="margin-top: 80px;">
+        <div class="d-flex justify-content-between">
+          <span id="closeModalBtn" class="close">&times;</span>
+          <div class="d-flex">
+            <button id="action_remove">Delete</button>
+            <button id="action_edit">Edit</button>
+          </div>
+        </div>
+        <img id="modalImage" class="bd-placeholder-img" src=""
+            role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+            focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#55595c"></rect>
+        </img>
+        <h2 id="modalTitle" class="mt-5"></h2>
+        <p id="modalContent"></p>
+        <h2 class="mt-5">Menu</h2>
+        <img id="modalMenu" class="mb-5" src="" />
+        <h2 class="mt-5">Comments</h2>
+        <div class="input-group comment-box">
+          <textarea
+            class="form-control textarea-comment"
+            aria-label="With textarea"
+          ></textarea>
+          <span id="action-comment" role="button" class="input-group-text"
+            >Post</span
+          >
+        </div>
+
+        <div id="comment-container"></div>
+      </div>
+    </div>
+
+    <div id="editModal" class="modal">
+      <div class="modal-content mt-sm-5">
+        <span id="closeEditModalBtn" class="close">&times;</span>
+        <header>Edit Place</header>
+        <div class="input-box">
+          <input
+            type="text"
+            id="edit-name"
+            class="input-field"
+            placeholder="Coffee Shop Name"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            id="edit-img"
+            type="text"
+            class="input-field"
+            placeholder="Coffee Shop Photo Url"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="edit-desc"
+            class="input-field"
+            placeholder="Description"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            id="edit-location"
+            type="text"
+            class="input-field"
+            placeholder="Location"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="edit-instagram"
+            class="input-field"
+            placeholder="Instagram"
+          />
+        </div>
+        <div class="input-box">
+          <input
+            id="edit-phone"
+            type="text"
+            class="input-field"
+            placeholder="Phone No."
+          />
+        </div>
+        <div class="input-box">
+          <input
+            type="text"
+            id="edit-menu"
+            class="input-field"
+            placeholder="Menu Image Url"
+          />
+        </div>
+        <button id="confirm_edit">Edit</button>
+
+
+      </div>
+    </div>
+
+    <!-- feather-icons -->
+    <script>
+      let selectedPlaceId = "";
+      let searchQuery = "";
+      const searchButton = document.querySelector("#search");
+      const cardContainer = document.getElementById("cardContainer");
+
+      searchButton.addEventListener("click", () => {
+        searchQuery = document.querySelector("#search-bar").value;
+        console.log(searchQuery);
+        cardContainer.innerHTML = "";
+        fetch(`http://localhost:1323/place?search=${searchQuery}`)
+          .then((response) => response.json())
+          .then((json) => takeData(json));
+      });
+
+      // CHECK AUTH
+      const commentBox = document.querySelector(".comment-box");
+      const addButton = document.querySelector("#action_add");
+      const removeButton = document.querySelector("#action_remove");
+      const toEditModalButton = document.querySelector("#action_edit")
+
+      // IF NOT LOGGED IN, CANT COMMENT, REMOVE PLACE, ADD PLACE
+      if (localStorage.getItem("USER_TOKEN") == null) {
+        commentBox.style.display = "none";
+        removeButton.style.display = "none";
+        addButton.style.display = "none";
+        toEditModalButton.style.display = "none"
+      }
+
+      // IF ROLE IS CUSTOMER, CANT ADD PLACE
+      if (localStorage.getItem("USER_ROLE") == 0) {
+        addButton.style.display = "none";
+      }
+
+      // IF ROLE IS CUSTOMER OR CAFFEE OWNER, CANT REMOVE
+      if (
+        localStorage.getItem("USER_ROLE") == 0 ||
+        localStorage.getItem("USER_ROLE") == 5
+      ) {
+        removeButton.style.display = "none";
+        toEditModalButton.style.display = "none"
+
+      }
+
+      // RENDER CARDS
+      function renderPlacesData(datas) {
+        datas.forEach((item) => {
+          selectedPlaceId = item.id;
+
+          const card = document.createElement("div");
+          card.innerHTML = `
+          <div id="cardPlace" class="col-md-12">
+            <div
+              id="contentContainer" class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+            >
+              <div
+                class="col-auto d-flex justify-content-center align-items-center py-3 px-3"
+              >
+                <img class="bd-placeholder-img" width="100" height="100" src="${item.image_url}"
+                                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"></rect>
+                            </img>
+              </div>
+              <div class="col p-4 d-flex flex-column position-static">
+                <h3 class="mb-0">${item.name}</h3>
+                <p class="card-text mb-auto">
+                  ${item.desc} - ${item.location}
+                </p>
+              </div>
+              <div
+                class="col d-flex flex-column align-items-center justify-content-center px-3"
+              >
+                <p class="">Contact: ${item.contact}</p>
+                <p class="">Instagram: ${item.instagram}</p>
+              </div>
+            </div>
+          </div>
+  `;
+          card.addEventListener("click", () => {
+            showModal(item);
+          });
+          card.style.cursor = "pointer";
+          cardContainer.appendChild(card);
+        });
+      }
+
+      // FETCH PLACES DATA FROM BACKEND
+      function fetchData() {
+        fetch("http://localhost:1323/place")
+          .then((response) => response.json())
+          .then((json) => takeData(json));
+      }
+
+      function takeData(val) {
+        console.log(val.data);
+        const placeData = val.data;
+        renderPlacesData(placeData);
+      }
+
+      // SHOW MODAL for edit data place
+      function showEditModal(placeData) {
+        const modal = document.getElementById("editModal");
+        const editButton = document.getElementById("confirm_edit")
+
+        const nameEdit = document.getElementById("edit-name");
+        const imgEdit = document.getElementById("edit-img");
+        const descEdit = document.getElementById("edit-desc");
+        const locationEdit = document.getElementById("edit-location");
+        const instagramEdit = document.getElementById("edit-instagram");
+        const phoneEdit = document.getElementById("edit-phone");
+        const menuEdit = document.getElementById("edit-menu");
+
+        nameEdit.value = placeData.name
+        imgEdit.value = placeData.image_url
+        descEdit.value = placeData.desc
+        locationEdit.value = placeData.location
+        instagramEdit.value = placeData.instagram
+        phoneEdit.value = placeData.contact
+        menuEdit.value = placeData.menu_img_url
+
+        modal.style.display = "block";
+
+        editButton.addEventListener("click", () => {
+
+          const data = {
+            id: placeData.id,
+            name: nameEdit.value,
+            image_url: imgEdit.value,
+            desc: descEdit.value,
+            location: locationEdit.value,
+            instagram: instagramEdit.value,
+            ig_url: `https://www.instagram.com/${instagramEdit.value}/`,
+            contact: phoneEdit.value,
+            menu_img_url: menuEdit.value
+          }
+
+          editPlaceData(data)
+
+        })
+
+      }
+
+      // SHOW MODAL for detail places
+      function showModal(item) {
+        const modal = document.getElementById("myModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalTitle = document.getElementById("modalTitle");
+        const modalContent = document.getElementById("modalContent");
+        const modalMenu = document.getElementById("modalMenu");
+
+        console.log(item);
+
+        modalTitle.textContent = item.name;
+        modalContent.innerHTML = `${item.desc} - ${item.location} <br/><br/> Instagram : ${item.instagram} <br/><br/> Contact : ${item.contact}`;
+        modalImage.src = item.image_url;
+        modalMenu.src = item.menu_img_url;
+
+        // RENDER COMMENT SECTION
+        renderComments(item.id);
+
+        // POST NEW COMMENT
+        function actionComment() {
+          const textArea = document.querySelector(".textarea-comment");
+          const commentString = textArea.value;
+          console.log(commentString);
+          console.log(localStorage.getItem("USER_ID"));
+          console.log(item.id);
+
+          const data = {
+            user_id: localStorage.getItem("USER_ID"),
+            place_id: item.id,
+            comment: commentString,
+          };
+          fetch("http://localhost:1323/place/comment", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("USER_TOKEN")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then((json) => {
+              // Success: handle the response data
+              console.log("DATA", json);
+              textArea.value = "";
+
+              // REFRESH
+              location.replace(location.href);
+            })
+            .catch((error) => {
+              // Error: handle the fetch error
+              console.error(error);
+            });
+        }
+
+        const commentButton = document.querySelector("#action-comment");
+        commentButton.addEventListener("click", () => {
+          actionComment();
+        });
+
+        document.querySelector("#action_edit").addEventListener("click", () => {
+          document.getElementById("myModal").style.display = "none";
+          showEditModal(item);
+        });
+
+        modal.style.display = "block";
+      }
+
+      // CLOSE MODAL
+      document.getElementById("closeModalBtn").addEventListener("click", () => {
+        const commentContainer = document.querySelector("#comment-container");
+        commentContainer.innerHTML = "";
+        document.getElementById("myModal").style.display = "none";
+      });
+
+      // CLOSE EDIT MODAL
+      document
+        .getElementById("closeEditModalBtn")
+        .addEventListener("click", () => {
+          document.getElementById("editModal").style.display = "none";
+        });
+
+
+      function editPlaceData(placeData) {
+        console.log("TOKEN : ", localStorage.getItem("USER_TOKEN"))
+        fetch("http://localhost:1323/place", {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("USER_TOKEN")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(placeData),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then((json) => {
+
+              // Success: handle the response data
+              console.log("DATA", json.data);
+              window.location.replace("place.html");
+
+            
+            })
+            .catch((error) => {
+              // Error: handle the fetch error
+              console.error(error);
+            });
+
+      }
+
+      // DELETE PLACE DATA
+      function removePlace(id) {
+        console.log("REMOVE ", id);
+        let data = {
+          place_id: id,
+        };
+        fetch("http://localhost:1323/place", {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("USER_TOKEN")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              showToast("Wrong email or password");
+              throw new Error("Error: " + response.status);
+            }
+          })
+          .then((json) => {
+            // Success: handle the response data
+            console.log("DATA", json.data);
+            // REFRESH
+            location.replace(location.href);
+          })
+          .catch((error) => {
+            // Error: handle the fetch error
+            console.error(error);
+          });
+      }
+      document.querySelector("#action_remove").addEventListener("click", () => {
+        removePlace(selectedPlaceId);
+      });
+
+      // FETCH PLACE DATA
+      fetchData();
+
+      // RENDER COMMENT SECTION
+      function renderComments(id) {
+        fetch("http://localhost:1323/place/comment/" + id)
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error("Error: " + response.status);
+            }
+          })
+          .then((json) => {
+            // Success: handle the response data
+            console.log("DATA", json.data);
+            const listComment = json.data;
+
+            // Render cards
+            const commentContainer =
+              document.querySelector("#comment-container");
+            commentContainer.innerHTML = "";
+
+            if (listComment.length < 1) {
+              const emptyMessage = document.createElement("p");
+              emptyMessage.style.textAlign = "center";
+              emptyMessage.innerText = "No comment yet";
+              commentContainer.appendChild(emptyMessage);
+            } else {
+              listComment.forEach((item) => {
+                const card = document.createElement("div");
+                card.innerHTML = `
+              <div class="comment-card">
+                <div class="divider"></div>
+                <p class="comment-text">
+                  "${item.comment}" <br />
+                  - ${item.first_name}
+                </p>
+              </div>
+              `;
+                commentContainer.appendChild(card);
+              });
+            }
+          })
+          .catch((error) => {
+            // Error: handle the fetch error
+            console.error(error);
+          });
+      }
+
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

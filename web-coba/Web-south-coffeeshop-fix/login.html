@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/login.css" />
+    <title>SouthCoffeeShop | Login & Registration</title>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar">
+      <a href="index.html" class="navbar-logo">South<span>CoffeeShop</span></a>
+
+      <div class="nav-nav">
+        <a href="index.html">Home</a>
+        <a href="place.html">Place</a>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Contact</a>
+      </div>
+      <!-- <nav class="nav">
+        <a href="#" class="navbar-logo">South<span>CoffeeShop</span></a>
+        <div class="nav-menu" id="navMenu">
+          <ul>
+            <li><a href="index.html" class="link active">Home</a></li>
+            <li><a href="#" class="link">Place</a></li>
+            <li><a href="index.html" class="link">About Us</a></li>
+            <li><a href="index.html" class="link">Contact</a></li>
+          </ul>
+        </div> -->
+      <div class="nav-button">
+        <button class="btn white-btn" id="loginBtn" onclick="login()">
+          Sign In
+        </button>
+        <button class="btn" id="registerBtn" onclick="register()">
+          Sign Up
+        </button>
+      </div>
+      <div class="nav-menu-btn">
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Section start -->
+    <section class="hero-login">
+      <!----------------------------- Form box ----------------------------------->
+      <div class="form-box">
+        <!------------------- login form -------------------------->
+
+        <div class="login-container" id="login">
+          <div class="top">
+            <span
+              >Don't have an account?
+              <a href="#" onclick="register()">Sign Up</a></span
+            >
+            <header>Login</header>
+          </div>
+          <div class="input-box">
+            <input
+              type="text"
+              id="login-email"
+              class="input-field"
+              placeholder="Username or Email"
+            />
+            <i class="bx bx-user"></i>
+          </div>
+          <div class="input-box">
+            <input
+              id="login-password"
+              type="password"
+              class="input-field"
+              placeholder="Password"
+            />
+            <i class="bx bx-lock-alt"></i>
+          </div>
+          <div class="input-box">
+            <input
+              type="submit"
+              class="submit"
+              value="Sign In"
+              onclick="return actionLogin();"
+            />
+          </div>
+          <div class="two-col">
+            <div class="one">
+              <input type="checkbox" id="login-check" />
+              <label for="login-check"> Remember Me</label>
+            </div>
+            <!-- <div class="two">
+              <label><a href="#">Forgot password?</a></label>
+            </div> -->
+          </div>
+        </div>
+
+        <!------------------- registration form -------------------------->
+        <div class="register-container" id="register">
+          <div class="top">
+            <span
+              >Have an account? <a href="#" onclick="login()">Login</a></span
+            >
+            <header>Sign Up</header>
+          </div>
+          <div class="two-forms">
+            <div class="input-box">
+              <input
+                id="register-firstname"
+                type="text"
+                class="input-field"
+                placeholder="Firstname"
+              />
+              <i class="bx bx-user"></i>
+            </div>
+            <div class="input-box">
+              <input
+                id="register-lastname"
+                type="text"
+                class="input-field"
+                placeholder="Lastname"
+              />
+              <i class="bx bx-user"></i>
+            </div>
+          </div>
+          <div class="input-box">
+            <input
+              id="register-email"
+              type="text"
+              class="input-field"
+              placeholder="Email"
+            />
+            <i class="bx bx-envelope"></i>
+          </div>
+          <div class="input-box">
+            <input
+              id="register-password"
+              type="password"
+              class="input-field"
+              placeholder="Password"
+            />
+            <i class="bx bx-lock-alt"></i>
+          </div>
+          <div id="user-type">
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio1"
+                value="0"
+                checked
+              />
+              <label class="form-check-label" for="inlineRadio1"
+                >Customer</label
+              >
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions"
+                id="inlineRadio2"
+                value="5"
+              />
+              <label class="form-check-label" for="inlineRadio2">Owner</label>
+            </div>
+          </div>
+
+          <div class="input-box">
+            <input
+              type="submit"
+              class="submit"
+              value="Register"
+              onclick="return actionRegister();"
+            />
+          </div>
+
+          <div class="two-col">
+            <div class="one">
+              <input type="checkbox" id="register-check" />
+              <label for="register-check"> Remember Me</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section end -->
+
+    <!-- Footer start -->
+    <footer>
+      <!-- <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div> -->
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#place">place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="credit">
+        <p>Copyright &copy; 2023 All Rights Reserved by SouthCoffeeShop</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <div id="toast-container"></div>
+
+    <!-- <script>
+      function myMenuFunction() {
+        var i = document.getElementById("navMenu");
+
+        if (i.className === "nav-menu") {
+          i.className += " responsive";
+        } else {
+          i.className = "nav-menu";
+        }
+      }
+    </script> -->
+
+    <!-- Slide login start-->
+    <script>
+      // CHECK AUTH
+      if (localStorage.getItem("USER_TOKEN") == null) {
+        console.log("LOGOUT");
+      } else {
+        window.location.replace("profile.html");
+      }
+
+      var a = document.getElementById("loginBtn");
+      var b = document.getElementById("registerBtn");
+      var x = document.getElementById("login");
+      var y = document.getElementById("register");
+
+      function login() {
+        x.style.left = "4px";
+        y.style.right = "-520px";
+        a.className += " white-btn";
+        b.className = "btn";
+        x.style.opacity = 1;
+        y.style.opacity = 0;
+      }
+
+      function register() {
+        x.style.left = "-510px";
+        y.style.right = "5px";
+        a.className = "btn";
+        b.className += " white-btn";
+        x.style.opacity = 0;
+        y.style.opacity = 1;
+      }
+
+      // REGISTER
+      function actionRegister() {
+        let emailInput = document.querySelector("#register-email").value;
+        let passwordInput = document.querySelector("#register-password").value;
+        let firstnameInput = document.querySelector(
+          "#register-firstname"
+        ).value;
+        let lastnameInput = document.querySelector("#register-lastname").value;
+
+        if (
+          emailInput == "" ||
+          passwordInput == "" ||
+          firstnameInput == "" ||
+          lastnameInput == ""
+        ) {
+          showToast("Please fill in all the fields");
+        } else {
+          const radioButtons = document.getElementsByName("inlineRadioOptions");
+          let selectedValue = "";
+
+          radioButtons.forEach((radio) => {
+            if (radio.checked) {
+              selectedValue = Number.parseInt(radio.value);
+            }
+          });
+
+          let data = {
+            first_name: firstnameInput,
+            last_name: lastnameInput,
+            email: emailInput,
+            password: passwordInput,
+            role_id: selectedValue,
+          };
+
+          fetch("http://localhost:1323/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                showToast("Error: " + response.statusText);
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then((json) => {
+              showToast("Account created", 4000);
+
+              // Success: handle the response data
+              console.log("DATA", json);
+              login();
+            })
+            .catch((error) => {
+              // Error: handle the fetch error
+              console.error(error);
+            });
+        }
+      }
+    </script>
+    <!-- Slide login end -->
+
+    <!-- feather-icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My Javascript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>

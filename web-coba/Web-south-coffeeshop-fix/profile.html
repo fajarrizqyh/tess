@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="css/login.css" />
+    <title>SouthCoffeeShop | Profile</title>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navbar start -->
+    <nav class="navbar">
+      <a href="index.html" class="navbar-logo">South<span>CoffeeShop</span></a>
+
+      <div class="nav-nav">
+        <a href="index.html">Home</a>
+        <a href="place.html">Place</a>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Contact</a>
+      </div>
+      <!-- <nav class="nav">
+        <a href="#" class="navbar-logo">South<span>CoffeeShop</span></a>
+        <div class="nav-menu" id="navMenu">
+          <ul>
+            <li><a href="index.html" class="link active">Home</a></li>
+            <li><a href="#" class="link">Place</a></li>
+            <li><a href="index.html" class="link">About Us</a></li>
+            <li><a href="index.html" class="link">Contact</a></li>
+          </ul>
+        </div> -->
+    </nav>
+    <!-- Navbar end -->
+
+    <!-- Section start -->
+    <section class="hero-login">
+      <a href="index.html" id="backButton">
+        <i class="bx bx-arrow-back"></i> Back
+      </a>
+      <!----------------------------- Form box ----------------------------------->
+      <div class="form-box">
+        <div class="login-container" id="login">
+          <div class="top">
+            <header>Profile</header>
+            <h1 class="fullname" style="text-align: center"></h1>
+            <p
+              class="email"
+              style="text-align: center; margin-bottom: 50px"
+            ></p>
+          </div>
+          <div class="input-box">
+            <input
+              type="submit"
+              class="submit logout-button"
+              value="Logout"
+              onclick="return actionLogout();"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section end -->
+
+    <!-- Footer start -->
+    <footer>
+      <!-- <div class="socials">
+        <a href="#"><i data-feather="instagram"></i></a>
+        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#"><i data-feather="facebook"></i></a>
+      </div> -->
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#place">place</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <script>
+        // CHECK AUTH
+        if (localStorage.getItem("USER_TOKEN") == null) {
+          window.location.replace("login.html");
+        }
+
+        let roleName = "";
+        const role = localStorage.getItem("USER_ROLE");
+        console.log(role);
+        switch (role) {
+          case "0":
+            roleName = "Customer";
+            break;
+          case "5":
+            roleName = "Coffee Owner";
+            break;
+          case "10":
+            roleName = "Admin";
+            break;
+          default:
+            break;
+        }
+
+        const username = document.querySelector("h1.fullname");
+        const email = document.querySelector("p.email");
+
+        username.innerText = `${localStorage.getItem(
+          "USER_NAME"
+        )} (${roleName})`;
+        email.innerText = localStorage.getItem("USER_EMAIL");
+
+        function actionLogout() {
+          localStorage.clear();
+          window.location.replace("login.html");
+        }
+
+        feather.replace();
+      </script>
+
+      <script src="js/script.js"></script>
+
+      <div class="credit">
+        <p>Copyright &copy; 2023 All Rights Reserved by SouthCoffeeShop</p>
+      </div>
+    </footer>
+    <!-- Footer End -->
+    <style>
+      #backButton {
+        position: fixed;
+        top: 60px;
+        left: 50px;
+        z-index: 9999;
+        /* font-size: 13px; */
+        color: white;
+        text-decoration: none;
+        display: flex;
+        font-size: 20px;
+        align-items: center;
+      }
+
+      #backButton i {
+        margin-right: 5px;
+      }
+
+      .logout-button {
+        width: 500px;
+      }
+
+      .input-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @media (max-width: 778px) {
+        .logout-button {
+          width: 200px;
+        }
+        #backButton {
+          top: 60px;
+          left: 40px;
+          font-size: 15px;
+        }
+
+        #backButton i {
+          margin-right: 5px;
+        }
+      }
+
+      @media (max-width: 458px) {
+        #backButton {
+          top: 50px;
+          left: 20px;
+          font-size: 12px;
+        }
+
+        #backButton i {
+          margin-right: 5px;
+        }
+      }
+    </style>
+  </body>
+</html>

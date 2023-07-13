@@ -1,0 +1,101 @@
+:root {
+  --primary: #e3a634;
+  --bg: #010101;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif !important;
+  background-color: var(--bg) !important;
+  color: #fff !important;
+  min-height: 1000px;
+}
+
+/* navbar */
+.navbar-fajar {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 7% !important;
+  background-color: rgba(1, 1, 1, 0.8);
+  border-bottom: 1px solid #854343 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+}
+
+.navbar-fajar .navbar-logo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  font-style: italic;
+  text-decoration: none !important;
+}
+
+.navbar-fajar .navbar-logo span {
+  color: var(--primary);
+}
+
+.navbar-fajar .nav-nav a {
+  color: #fff;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 1rem;
+  text-decoration: none !important;
+}
+
+.navbar .nav-nav a:hover {
+  color: var(--primary);
+}
+
+.navbar-fajar .nav-nav a::after {
+  content: "";
+  display: block;
+  padding-bottom: 0.5rem;
+  border-bottom: 0.1rem solid var(--primary);
+  transform: scaleX(0);
+  transition: 0.2s linear;
+}
+
+.navbar-fajar .nav-nav a:hover::after {
+  transform: scaleX(0.5);
+}
+
+.navbar-fajar .navbar-extra a {
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+.feather-20 {
+  width: 20px;
+  height: 20px;
+}
+
+.navbar-fajar .navbar-extra a:hover {
+  color: var(--primary);
+}
+
+#hamburger-menu {
+  display: none;
+}
+
+.hero-jar {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
